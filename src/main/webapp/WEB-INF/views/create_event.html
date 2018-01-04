@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Create Event</title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" >
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.timepicker.min.js"></script>
+    <link href="../css/jquery.timepicker.css" rel="stylesheet" />
+    <script src="../js/validations.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZd4QxSKxELFULzQjv0Mwx7ybsUM_eBOg&signed_in=false&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <script src="../js/addressLocator.js"></script>
+    <style>
+        /*.navbar {
+            font-size: 30px;
+            text-align: center;
+        }*/
+
+        .time {
+            width: 80px;
+        }
+    </style>
+
+</head>
+<body style="background-color:lightgray">
+    <nav class="navbar navbar-default" style="background-color:black;height:70px">
+        <div class="container-fluid">
+            <div class="navbar-header" style="padding-top:10px">
+                <a class="navbar-brand" href="#" style="color:white">WHAM</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="span12">
+                <h2>Create your event</h2>
+                <form action="http://localhost:8080/wham/newevent" align="left" method="post" onsubmit="return validateForm()">
+                    <fieldset>
+                        <label for="eventName">Event Name</label>
+                        <input type="text" name="name" id="name" maxlength="60" required onblur="validateName(name)" />
+                        <span id="nameError" style="display: none;">You can only use alphabetic characters, hyphens and apostrophes</span>
+                        <label for="Event_Description">Event Description</label>
+                        <input id="Event_Description" name="Event_Description" maxlength="500" type="text" onblur="validateNotEmpty('Event_Description')">
+                        <span id="Event_Description_Error" style="display: none;">Please enter an event description</span>
+                        <label for="Location">Location</label>
+                        <div id="locationField">
+                            <input id="autocomplete" name="address" placeholder="Enter your address"
+                                   onFocus="geolocate()" type="text" />
+                        </div>
+                        <label for="UserInfo_Phone">Phone</label>
+                        <input id="phone" name="phone" type="text" value="" onblur="validatePhone(phone)">
+                        <span id="phoneError" style="display: none;">Not a valid phone number</span>
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" placeholder="abc@neu.edu" required onblur="validateEmail(value)" />
+                        <span id="emailError" style="display: none;">Enter a valid Northeastern email.</span>
+                        <div>
+                            <label class="radio inline ">
+                                <input type="radio" name="optionRadios" id="optionsRadios1" value="option1" checked onclick="displaySingleDay()">
+                                Single Day event
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" name="optionRadios" id="optionsRadios2" value="option2" onclick="displayMultiDay()">
+                                Multi Day event
+                            </label>
+                        </div>
+                        <br>
+                        <div id="singleday">
+                            <label for="eventDate">Event Date</label>
+                            <input id="eventDate" name="eventDate" required type="text">
+                        </div>
+
+                        <div id="multiday" hidden>
+                            <label for="eventStartDate">Event Start Date</label>
+                            <input id="startDate" name="startDate" required type="text">
+                            <label for="eventEndDate">Event End Date</label>
+                            <input id="endDate" name="endDate" required type="text">
+                        </div>
+                        <br />
+                        <div>
+                            <label for="startTime">Start Time</label>
+                            <input type="text" name="startTime" id="startTime" required class="time">
+                            <label for="endTime">End Time</label>
+                            <input type="text" name="endTime" id="endTime" required class="time">
+                        </div>
+                        <div>
+                            <label class="checkbox inline" id="official">
+                                <input type="checkbox" name="check" value="">
+                                Official NEU Event
+                            </label>
+                        </div>
+                        <br />
+                        <input type="submit" value="Submit"  name="submit" class="btn btn-primary " />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+
+
+
+</body>
+</html>

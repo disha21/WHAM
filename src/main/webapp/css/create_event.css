@@ -1,0 +1,52 @@
+﻿.time {
+    width: 100px;
+}
+.form_container {
+    width: 70%;
+    background-color: #f2f2f2;
+    text-align: left;
+    margin-top: 20px;
+    padding: 30px;
+    box-shadow: 6px 6px 2px #888888;
+    border: #860114 solid 4px;
+}
+label{
+    font-size:120%;
+    font-family:Calibri;
+}
+input[type = text] {
+    margin-bottom: 20px;
+    border: 3px inset #888888;
+    outline: 0;
+    height: 30px !important;
+    width: 90%;
+    max-width: 350px;
+}
+input[type=checkbox] {
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+}
+@media only screen and (max-width: 500px) {
+    .form_container {
+        width: 95%;
+    }
+}
+.myButton {
+    background-color: #860114 !important;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #860114;
+    color: #fff;
+    font-family: Calibri;
+    font-size: 21px;
+    padding: 9px 39px;
+}
+.myButton:hover {
+        opacity: 0.7;
+}
+.disable{
+    pointer-events:none;opacity:0.7
+}

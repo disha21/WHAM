@@ -1,0 +1,50 @@
+﻿#myMap {
+    width: 100%;
+    height: 600px;
+    border: solid 0.5px gray;
+}
+
+#total {
+    color: #860114;
+    text-align: center;
+    font-size: 18px;
+    font-family: Calibri;
+    padding-bottom: 15px;
+    font-weight: bolder;
+}
+
+#legend {
+    padding-top: 10px;
+    color: #860114;
+    font-size: 18px;
+    font-family: Calibri;
+    font-weight: bolder;
+}
+
+.legendText {
+    padding-right: 25px;
+}
+
+.apply {
+    color: #860114;
+    font-size: 18px;
+    font-family: Calibri;
+    font-weight: bolder;
+}
+
+input[type="checkbox"] {
+    width: 20px; /*Desired width*/
+    height: 20px; /*Desired height*/
+    padding: 0;
+    margin: 0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+<form id="formoid" action="http://ec2-52-87-159-69.compute-1.amazonaws.com:8080/WHAM/newevent" title="" enctype="multipart/form-data" method="post">
+    <div>
+        <label class="title">First Name</label>
+        <input type="text" id="name" name="name" >
+    </div>
+    <div>
+        <label class="title">Name</label>
+        <input type="text" id="name2" name="name2" >
+    </div>
+    <div>
+        <input type="submit" id="submitButton"  name="submitButton" value="Submit">
+    </div>
+</form>
+<script type='text/javascript'>
+    /* attach a submit handler to the form */
+    $("#formoid").submit(function(event) {
+
+        /* stop form from submitting normally */
+        event.preventDefault();
+
+        /* get some values from elements on the page: */
+        var $form = $( this ),
+                url = $form.attr( 'action' );
+
+        /* Send the data using post */
+        var posting = $.post( url, { eventName : "jgjbj" , eventDesc: "hjgjg" } );
+
+        /* Alerts the results */
+        posting.done(function( data ) {
+            alert('success');
+        });
+
+        posting.always(function() {
+            alert( "second finished" );
+        });
+
+    });
+</script>
+
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="eventName"
+
+jhgj
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="eventDesc"
+
+jnhkh
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="AddressLine1"
+
+1760 Halford Ave 278
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="AddressLine2"
+
+
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="city"
+
+abc
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="state"
+
+anc
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="zipcode"
+
+76887
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="eventLocation"
+
+1760 Halford Ave 278, , abc, anc, 76887
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="organiserName"
+
+hg
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="organiserDesc"
+
+jkll
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="phoneNumber"
+
+3528707777
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="emailId"
+
+soni.di@husky.neu.edu
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="startDateAndTime"
+
+04/04/2016 12:00 AM
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="endDateAndTime"
+
+04/07/2016 12:00 AM
+------WebKitFormBoundaryN8u0riAEmOZcC1tF
+Content-Disposition: form-data; name="myFile"; filename=""
+Content-Type: application/octet-stream
+
+
+
+</body>
+</html>

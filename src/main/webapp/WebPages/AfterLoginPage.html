@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WHAM</title>
+    <link rel="shortcut icon" type="image/png" href="../images/WHAM_new.png" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/pageStyle.css" rel="stylesheet" />
+    <link href="../css/Top Menu/component01.css" rel="stylesheet" />
+    <link href="../css/Top Menu/default01.css" rel="stylesheet" />
+    <script src="../js/TopMenu/modernizr.custom.js"></script>
+</head>
+<body>
+    <header>
+        <div class="cd-logo"><a href="AfterLoginPage.html"><img src="../images/WHAM Logo.png" alt="Logo"></a></div>
+                    <ul id="cbp-tm-menu" class="cbp-tm-menu" style="height: 50px;">
+
+                <li>
+                    <a href="#" id="welcome"></a>
+                    <ul class="cbp-tm-submenu">
+                        <li><a href="create_event.html" class="cbp-tm-icon-pencil">Create Event</a></li>
+                        <li><a href="ManagePreferencesPage.html" class="cbp-tm-icon-cog">Manage Preferences</a></li>
+                        <li><a href="HomePage.html" class="cbp-tm-icon-archive" onclick="localStorage.clear('name')">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+       
+    </header>
+    <main class="cd-main-content" style="background-color:transparent">
+        <div class="intrinsic-container-16x9" style="text-align:center;">
+                        
+            <iframe src="maps.html" style="width: 90%"></iframe>
+        </div>
+    </main>
+    <script src="../js/TopMenu/cbpTooltipMenu.min.js"></script>
+    <script>
+        var menu = new cbpTooltipMenu(document.getElementById('cbp-tm-menu'));
+    </script>
+    <script>
+        var temp = localStorage.getItem("name")||"";
+        var name = temp.charAt(0).toUpperCase() + temp.slice(1);
+        document.getElementById("welcome").innerHTML = "Hi " + name;
+    </script>
+</body>
+</html>
+
+    <!--<div class="container" style="text-align:center">
+        <button type="button" class="btn btn-link" style="font-size:20px;padding-right:250px">Manage your preferences</button>
+        <button type="button" class="btn btn-link" style="font-size: 20px; padding-left: 50px">Create an event</button>
+        <div id="myMap"></div> 
+    </div>-->

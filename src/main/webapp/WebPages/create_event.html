@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>WHAM</title>
+    <link rel="shortcut icon" type="image/png" href="../images/WHAM_new.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/moments.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/addressLocator.js"></script>
+    <script src="../js/validations.js"></script>
+    <link href="../css/pageStyle.css" rel="stylesheet" />
+    <link href="../css/create_event.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/Top Menu/component01.css" rel="stylesheet" />
+    <link href="../css/Top Menu/default01.css" rel="stylesheet" />
+    <script src="../js/TopMenu/modernizr.custom.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("ready!");
+
+            // set the checkbox to false initially
+            if (document.getElementById("isOfficialEvent").checked == true) {
+                document.getElementById("isOfficialEvent").value = true;
+                console.log(document.getElementById("isOfficialEvent").value);
+            } else {
+                document.getElementById("isOfficialEvent").value = false;
+                console.log(document.getElementById("isOfficialEvent").value);
+
+            }
+
+            // Attach a submit handler to the form
+            $("#creat_event_form").submit(function(event) {
+                console.log("In submit handler");
+                // Stop form from submitting normally
+                event.preventDefault();
+
+                var formData = new FormData($("#creat_event_form")[0]);
+                console.log(formData);
+                var isOfficialEvent = document.getElementById("isOfficialEvent").value;
+                formData.append('isOfficialEvent', isOfficialEvent);
+
+                jQuery.ajax({
+                    url: '../newevent',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function(data) {
+                        //console.log(data);
+
+                        var temp = JSON.stringify(data);
+                        console.log(temp);
+                        var result = jQuery.parseJSON(temp);
+                        if (result.status == "OK") {
+                            alert("Your event has been created!");
+                        }else{
+                        	 alert("There was an error in creating the event." + "\nPlease contact the administrator");
+                             $('#creat_event_form').trigger("reset");
+
+                             document.getElementById("demo").innerHTML = "";
+                        }
+
+                        $('#creat_event_form').trigger("reset");
+                        document.getElementById("demo").innerHTML = "";
+
+                    },
+                    error: function(data) {
+                        alert("There was an error in creating the event." + "\nPlease contact the administrator");
+                        $('#creat_event_form').trigger("reset");
+
+                        document.getElementById("demo").innerHTML = "";
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="cd-logo">
+            <a href="AfterLoginPage.html"><img src="../images/WHAM Logo.png" alt="Logo">
+            </a>
+        </div>
+        <ul id="cbp-tm-menu" class="cbp-tm-menu" style="height: 50px;">
+            <li>
+                <a href="#" id="welcome"></a>
+                <ul class="cbp-tm-submenu">
+                    <li>
+                        <a href="create_event.html" class="cbp-tm-icon-pencil disable">Create Event</a>
+                    </li>
+                    <li>
+                        <a href="#" class="cbp-tm-icon-cog">Manage Preferences</a>
+                    </li>
+                    <li>
+                        <a href="HomePage.html" class="cbp-tm-icon-archive" onclick="localStorage.clear('name')">Log Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+    <div class="cd-main-content" style="background-color:transparent">
+        <div class="intrinsic-container-16x9">
+            <div align="center">
+                <div class="form_container container">
+                    <h2 style="text-align:center;">Create your event</h2>
+                    <br/>
+                    <!--enctype="multipart/form-data"-->
+                    <form name="creat_event_form" id="creat_event_form" action="../newevent" enctype="multipart/form-data">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-xs-5" style="margin-left:5%">
+                                    <label for="eventName"><b>Event Name*</b>
+                                    </label>
+                                    <input type="text" name="eventName" id="eventName" maxlength="60" required onblur="validateName('name')" />
+                                    <span id="nameError" style="display: none;">You can only use alphabetic characters, hyphens and apostrophes</span>
+                                    <label for="Event_Description"><b>Event Description</b>
+                                    </label>
+                                    <input id="Event_Description" name="eventDesc" maxlength="500" type="text" onblur="validateNotEmpty('Event_Description')">
+                                    <span id="Event_Description_Error" style="display: none;">Please enter an event description</span>
+                                    <!--label for="Location"><b>Location*</b></label-->
+                                    <label for="AddressLine1"><b>Address Line 1*</b>
+                                    </label>
+                                    <input id="AddressLine1" name="AddressLine1" type="text" value="" required oninput="populate()">
+                                    <label for="AddressLine2"><b>Address Line 2 (optional)</b>
+                                    </label>
+                                    <input id="AddressLine2" name="AddressLine2" type="text" value="" oninput="populate()">
+                                    <label for="City"><b>City*</b>
+                                    </label>
+                                    <input id="City" name="city" type="text" value="" required oninput="populate()">
+                                    <label for="State"><b>State*</b>
+                                    </label>
+                                    <input id="State" name="state" type="text" value="" required oninput="populate()">
+                                    <label for="zipcode"><b>Zip code*</b>
+                                    </label>
+                                    <input id="zipcode" name="zipcode" type="text" value="" required oninput="populate()">
+                                    <div id="locationField">
+                                        <!--label for="eventLocation"><b>Address*</b></label-->
+                                        <input id="eventLocation" name="eventLocation" type="hidden" />
+                                        <script>
+                                            function populate() {
+                                                document.getElementById('eventLocation').value = (document.getElementById('AddressLine1').value + ', ' + document.getElementById('AddressLine2').value + ', ' + document.getElementById('City').value + ', ' + document.getElementById('State').value + ', ' + document.getElementById('zipcode').value);
+                                            }
+                                        </script>
+                                    </div>
+                                    <label class="checkbox inline" id="OfficialEvent">
+                                        <input type="checkbox" name="isOfficialEvent" id="isOfficialEvent" onchange="myCheckbox()" value=false>
+                                        <b> Official NEU Event</b> </label>
+                                </div>
+                                <div class="col-xs-2">
+                                </div>
+                                <div class="col-xs-5" style="margin-left:10%">
+                                    <label for="organiserName"><b>Organiser Name*</b>
+                                    </label>
+                                    <input id="organiserName" name="organiserName" type="text" value="" required onblur="validateName('organiserName')">
+                                    <span id="organiserNameError" style="display: none;">Please enter an organiser name</span>
+                                    <label for="organiserDesc"><b>Organiser Description*</b>
+                                    </label>
+                                    <input id="organiserDesc" name="organiserDesc" type="text" value="" required onblur="validateNotEmpty('organiserDesc')">
+                                    <span id="organiserDesc_Error" style="display: none;">Please enter an organiser description</span>
+                                    <label for="Phone"><b>Phone (optional)</b>
+                                    </label>
+                                    <input id="phone" name="phoneNumber" type="text" value="" onblur="validatePhone(phone)">
+                                    <span id="phoneError" style="display: none;">Not a valid phone number</span>
+                                    <label for="email"><b>Email*</b>
+                                    </label>
+                                    <input type="text" name="emailId" id="email" required onblur="validateEmail(value)">
+                                    <span id="emailError" style="display: none;">Enter a valid Northeastern email.</span>
+                                    <div class="form-group">
+                                        <label for="endDateAndTime"><b>Start Date and Time*</b>
+                                        </label>
+                                        <div class='input-group date' id='startDateAndTime' style="margin-right: 10%;">
+                                            <input type='text' name="startDateAndTime" class="form-control" style="width:90%; border-radius: 4px" />
+                                            <span class="input-group-addon" style="border-left: 1px solid #ccc; border-radius: 4px;"> <span class="glyphicon glyphicon-calendar"></span> </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endDateAndTime"><b>End Date and Time*</b>
+                                        </label>
+                                        <div class='input-group date' id='endDateAndTime' style="margin-right: 10%;">
+                                            <input type='text' name="endDateAndTime" class="form-control" style="width:90%; border-radius: 4px;" />
+                                            <span class="input-group-addon" style="border-left: 1px solid #ccc; border-radius: 4px;"> <span class="glyphicon glyphicon-calendar"></span> </span>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="myFile" name="myFile" size="50" onchange="myFunction()" style="line-height: 0px; margin-top: 30px;">
+                                    <label>Upload a poster of your event above</label>
+                                    <script type="text/javascript">
+                                        $('#startDateAndTime').datetimepicker({
+                                            minDate: moment()
+                                        });
+                                    </script>
+                                    <script type="text/javascript">
+                                        $('#endDateAndTime').datetimepicker({
+                                            minDate: moment()
+                                        });
+                                    </script>
+                                    <p id="demo"></p>
+                                    <script>
+                                        function myFunction() {
+                                            var x = document.getElementById("myFile");
+                                            var txt = "";
+                                            if ('files' in x) {
+                                                if (x.files.length == 0) {
+                                                    txt = "Select file to upload.";
+                                                } else {
+
+                                                    var file = x.files[0];
+                                                    if ('name' in file) {
+                                                        txt += "name: " + file.name + "<br>";
+                                                    }
+                                                    if ('size' in file) {
+                                                        txt += "size: " + file.size + " bytes <br>";
+                                                    }
+                                                }
+                                            } else {
+                                                if (x.value == "") {
+                                                    txt += "Select any file.";
+                                                } else {
+                                                    txt += "The files property is not supported by your browser!";
+                                                    txt += "<br>The path of the selected file: " + x.value;
+                                                    // If the browser does not support the files property, it will return the path of the selected file instead.
+                                                }
+                                            }
+                                            document.getElementById("demo").innerHTML = txt;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12" style="margin-left:5%">
+                                        <div>
+                                        </div>
+                                        <br />
+                                        <input type="submit" value="Submit" name="submit" class="myButton " />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/TopMenu/cbpTooltipMenu.min.js"></script>
+    <script>
+        var temp = localStorage.getItem("name") || "";
+        var name = temp.charAt(0).toUpperCase() + temp.slice(1);
+        document.getElementById("welcome").innerHTML = "Hi " + name;
+    </script>
+    <script>
+        function myCheckbox() {
+            if (document.getElementById("isOfficialEvent").checked == true) {
+                document.getElementById("isOfficialEvent").value = true;
+                console.log(document.getElementById("isOfficialEvent").value);
+            } else {
+                document.getElementById("isOfficialEvent").value = false;
+                console.log(document.getElementById("isOfficialEvent").value);
+            }
+        }
+    </script>
+    <script>
+        var menu = new cbpTooltipMenu(document.getElementById('cbp-tm-menu'));
+    </script>
+</body>
+
+</html>

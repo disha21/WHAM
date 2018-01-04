@@ -1,0 +1,70 @@
+.vertical-offset-100 {
+	padding-top: 13%;
+	height: auto;
+	width: 300px;
+}
+
+.alert-error{
+	color: #F32F2F;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.panel-title {
+	text-align: left;
+	font-size: 25px;
+	margin-top: 0;
+}
+
+.login_container{
+    margin-top: 150px;
+    width: 550px;
+    min-width: 350px;
+    min-height:500px !important;
+    text-align:center !important;
+    overflow:hidden;
+}
+.error {
+    padding-top:10px;
+}
+#error{
+    padding:10px;
+}
+.checkboxtext {
+    display: inline;
+}
+input[type=checkbox] {
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    padding: 10px;
+}
+@media only screen and (max-width: 500px) {
+    .login_container {
+        margin-top: 200px;
+        width:90%;
+        min-width: 350px;
+        text-align: center !important;
+        overflow: hidden;
+    }
+}
+a{
+    color:#36c;
+    font-size: 17px !important;
+    text-decoration: underline;
+}
+a:visited{
+    color:#609;
+    font-size: 17px !important;
+}
+#error{
+    font-size: 17px !important;
+}
+#loginForm{
+    font-size: 17px;
+}
+ 

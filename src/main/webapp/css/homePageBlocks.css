@@ -1,0 +1,109 @@
+﻿.content-mobile {
+    display:none;
+}
+.content-desktop {
+    text-align:center;
+}
+.content {
+    display: inline-block;
+    width: 20%;
+    min-width:250px;
+    background-color: white;
+    margin: 40px 5% 40px 5%;
+    height: 400px;
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(76, 76, 76, 0.68);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(76, 76, 76, 0.68);
+    box-shadow: 4px 4px 5px 0px rgba(76, 76, 76, 0.68);
+    border-radius: 10px;
+}
+      
+@media only screen and (max-width: 700px) {
+    .content-desktop {
+        display: none;
+    }
+
+    .content-mobile {
+        display: inline-block;
+    }
+}
+@media only screen and (max-width: 1400px) {
+    .content-3 {
+        display: none;
+    }
+    .content{
+        width:30%
+    }
+}
+.content-header {
+    background-color: #860114;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.content-footer {
+    background-color: #860114;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.content h1 {
+    color: rgb(235, 235, 235);
+    font-family: Calibri;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 10px;
+}
+.content img {
+    width: 99%;
+    margin: 5px 0 5px 0;
+    height: 300px;
+}
+ 
+.content img.bottom {
+    animation-name: anim;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 30s;
+    animation-direction: alternate;
+    animation-delay: 15s;
+}
+
+.content img.middle {
+    animation-name: anim;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 30s;
+    animation-direction: alternate;
+    animation-delay: 10s;
+}
+
+.content img.middle2 {
+    animation-name: anim;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 30s;
+    animation-direction: alternate;
+    animation-delay: 5s;
+}
+
+@keyframes anim {
+    0% {
+        opacity: 1;
+    }
+
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+     
+   

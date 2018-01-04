@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="../js/maps.js"></script>
+<link href="../css/maps.css" rel="stylesheet" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <!-- Showing total number of events happening around user -->
+    <div id="total"></div>
+
+    <!-- Showing the map -->
+    <div id="myMap"></div>
+
+    <!-- Showing legend for the map -->
+    <div id="legend">
+        <table align="right">
+            <tr>
+                <td>
+                    <img src="../images/blue_dot_circle.png" height="30" width="30">
+                </td>
+                <td class="legendText">
+                    - Your Current Location
+                </td>
+                <td>
+                    <img src="../images/paw_pin.png" height="30" width="30">
+                </td>
+                <td class="legendText">
+                    - NEU Official Event
+                </td>
+                <td>
+                    <img src="http://maps.google.com/mapfiles/kml/pal4/icon50.png" height="30" width="30">
+                </td>
+                <td class="legendText">
+                    - Multiple events on same location
+                </td>
+                <td>
+                    <img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png" height="30" width="30">
+                </td>
+                <td>
+                    - Event
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Showing apply preferences checkbox -->
+    <div class="apply" style="display:none">
+        <label><input id="check" type="checkbox" onclick="apply()"/> Apply my preferences</label>
+    </div>
+
+    <!-- Showing info window -->
+    <div id="info">
+        <div id="infoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!--Non NEU Calendar Events' details-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Event Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="details"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="../css/info_window.css" rel="stylesheet" />
+</body>
+</html>

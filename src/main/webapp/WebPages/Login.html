@@ -1,0 +1,76 @@
+﻿<html>
+	<head>
+		<title>WHAM</title>
+        <link rel="shortcut icon" type="image/png" href="../images/WHAM_new.png" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="../images/WHAM_new.png" />
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+		<link rel="stylesheet" href="../css/LogIn.css">
+		<link rel="stylesheet" href="../css/reset.css">
+		<link href="../css/style.css" rel="stylesheet" />
+		<script src="../js/LogIn.js"></script>
+        <link href="../css/pageStyle.css" rel="stylesheet" />
+	</head>
+	<body style="overflow:hidden">
+		<header>
+			<div class="cd-logo">
+				<a href="HomePage.html"><img src="../images/WHAM Logo.png" alt="Logo"></a>
+			</div>
+			<nav class="cd-main-nav-wrapper">
+				<ul class="cd-main-nav">
+					<li class="loginBtn" style="padding-top:12px">
+						<a href="HomePage.html" type="button" class="btn btn-default" style="text-decoration: none;">HOME</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div class="intrinsic-container-16x9">
+            <center>
+                <div class="login_container">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title" style="padding:10px"> Log In</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form accept-charset="UTF-8" id="loginForm" action="AfterLoginPage.html">
+                                <fieldset>
+                                    <div class="form-group" style="margin: 5px; padding-bottom: 30px">
+                                        <input type="email" class="form-control" placeholder="NEU Email ID" name="neu_emailid" id="neu_emailid" autofocus required>
+                                    </div>
+                                    <div class="form-group" style="margin:5px;padding-bottom:30px">
+                                        <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+                                    </div>
+                                    <div class="checkbox">
+                                     
+                                            <input name="remember" type="checkbox" value="Remember Me">
+                                            <span class="checkboxtext">
+                                               Remember me
+                                            </span>
+                                      
+                                    </div>
+                                    <div>
+                                        <span id="error" class="alert-error"> NEU Email/Password did not match</span>
+                                    </div>
+                                    <br/>
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                                    <br/>
+                                    <div>
+                                        <a href="http://www.northeastern.edu/resnet/?p=608" target="_blank">Forgot Password</a>
+                                    </div>
+                                 </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </center>
+		</div>		
+	</body>
+</html>

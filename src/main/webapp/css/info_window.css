@@ -1,0 +1,15 @@
+﻿.info {
+    width: 400px;
+    max-height: 250px;
+    overflow: auto;
+}
+
+.sect {
+    padding-left: 10px;
+    background-color: #f7f7f7;
+}
+
+.sect1 {
+    padding-left: 10px;
+    background-color: #ccdcff;
+}

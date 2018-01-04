@@ -1,0 +1,495 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Your Preferences</title>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/Top Menu/component01.css" rel="stylesheet" />
+    <link href="../css/Top Menu/default01.css" rel="stylesheet" />
+    <link href="../css/pageStyle.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/t4t5/sweetalert/master/dist/sweetalert.min.js"></script>
+    <script src="../js/TopMenu/modernizr.custom.js"></script>
+    <script src="../js/TopMenu/cbpTooltipMenu.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/t4t5/sweetalert/master/dist/sweetalert.css">
+
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css">
+    <style>
+
+        table,td,th{
+
+            border-radius: 10px;
+            margin: 10px;
+            padding: 10px;
+            border-color: darkred;
+            border-style: solid;
+            border-width: 2px;
+            margin-left: 10px;
+
+        }
+
+        .button{
+
+            font-family:'Comic Sans MS';
+            background-color:darkred;
+            border-radius: 10px;
+            color: white;
+            height: 30px;
+            width: 100px;
+            font-weight: bold;
+
+
+        }
+
+
+
+    </style>
+    <script>
+        //get url
+        var url = window.location.href;
+        var arr = url.split("/");
+        //create api url with current domain and port number arr[2]
+        var api_url1 = "http://" + "ec2-52-87-159-69.compute-1.amazonaws.com:8080" + "/WHAM/getPrefList";
+        var api_url2 = "http://" + "ec2-52-87-159-69.compute-1.amazonaws.com:8080" + "/WHAM/getPref?userPreference=3";
+        var preferences;
+        var userPref;
+        var selectedCategory0Pref = new Object();
+        var selectedCategory1Pref = new Object();
+        var selectedCategory2Pref = new Object();
+        /* Get th json by hitting ../getPrefList api*/
+        $.get({ url: api_url1 }, function (data) {
+            preferences = data;
+
+            /* Get th json by hitting ../getPref api*/
+            $.get({ url: api_url2 }, function (data1) {
+                userPref = data1.selectedPreference;
+                // create list of all event topics. Use this if category = 1.
+                var eventTopicList = preferences.eventTopic;
+                // for holding user selected preferences of selected event topics
+                var userEventTopics = [];
+
+                // create list of all event types. Use this if category = 0.
+                var eventTypeList = preferences.eventType;
+                // for holding user selected preferences for selected event types
+                var userEventTypes = [];
+
+                // create map of all event sub-topics. Use this if category = 2.
+                var map = new Object();
+                for (var i = 0; i < eventTopicList.length; i++) {
+                    var subTops = eventTopicList[i].subTopicsList;
+                    for (var j = 0 ; j < subTops.length; j++) {
+                        map[subTops[j].eventId] = subTops[j].eventName;
+                    }
+                }
+                // for holding user selected preferences for selected event sub-topics
+                var userSubTopics = [];
+
+                //var eventSubTopicList = preferences.eventTopic;
+                for (var i = 0; i < userPref.length; i++) {
+                    switch (userPref[i].eventCategory) {
+                        // if category is event type
+                        case 0: {
+                            userEventTypes.push(eventTypeList[userPref[i].eventId - 1].eventName);
+                            selectedCategory0Pref[userPref[i].eventId] = eventTypeList[userPref[i].eventId - 1].eventName;
+                            break;
+                        }
+                            // if category is event topic
+                        case 1: {
+                            userEventTopics.push(eventTopicList[userPref[i].eventId - 1].topicName);
+                            selectedCategory1Pref[userPref[i].eventId] = eventTopicList[userPref[i].eventId - 1].topicName;
+                            break;
+                        }
+                            // if category is event sub-topic
+                        case 2: {
+                            userSubTopics.push(map[userPref[i].eventId]);
+                            selectedCategory2Pref[userPref[i].eventId] = map[userPref[i].eventId];
+                            break;
+                        }
+
+                    }
+                }
+                // print all the three lists of user preferences (Currently I am just printing this. You can now display these lists)
+                console.log("Event Topic Pref: " + userEventTopics);
+                console.log("Event Type Pref: " + userEventTypes);
+                console.log("Event Sub-Topic Pref: " + userSubTopics);
+                console.log("Event Sub-Topic Pref: " + JSON.stringify(userPref));
+                console.log("MAP cat 2" + JSON.stringify(selectedCategory2Pref));
+                console.log("MAP cat 1" + JSON.stringify(selectedCategory1Pref));
+                console.log("MAP cat 0" + JSON.stringify(selectedCategory0Pref));
+                renderPreferences();
+            });
+
+
+        });
+    </script>
+
+    <script>
+        var eventTypeArray = null;
+        var eventTopicArray = null;
+        function subPreference(eventId,eventCategory){
+            this.eventId = eventId;
+            this.eventCategory = eventCategory;
+        }
+
+        var userPreferences = new Array();
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://ec2-52-87-159-69.compute-1.amazonaws.com:8080/WHAM/getPrefList";
+
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                myFunction(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(response) {
+
+            var serverResponse = JSON.parse(response);
+            //console.log(serverResponse);
+            var userId = serverResponse.userId;
+            eventTypeArray = serverResponse.eventType;
+            eventTopicArray = serverResponse.eventTopic;
+
+
+            var i,j;
+
+            for (i = 0; i < eventTypeArray.length; i++) {
+                var option = document.createElement("option");
+                option.text = eventTypeArray[i].eventName;
+                document.getElementById('eventName').appendChild(option);
+            }
+
+            for (i = 0; i < eventTopicArray.length; i++) {
+                var option = document.createElement("option");
+                option.text = eventTopicArray[i].topicName;
+                document.getElementById('eventTopic').appendChild(option);
+            }
+
+            var allOption = document.createElement("option");
+            allOption.text = "All sub topics";
+            document.getElementById('eventSubTopic').appendChild(allOption);
+            var subTopicsListArray  = eventTopicArray[0].subTopicsList;
+            for (i = 0; i < subTopicsListArray.length; i++) {
+                var option = document.createElement("option");
+                option.text = subTopicsListArray[i].eventName;
+                document.getElementById('eventSubTopic').appendChild(option);
+            }
+
+        }
+
+        function onSelectEventTopic(){
+            var selectedValue =  document.getElementById('eventTopic').value;
+            for(var i =0;i< eventTopicArray.length;i++){
+                if(eventTopicArray[i].topicName.localeCompare(selectedValue) == 0){
+                    //var select = document.getElementById("eventSubTopic");
+                    document.getElementById('eventSubTopic').innerHTML = "";
+                    var subTopicsListArray  = eventTopicArray[i].subTopicsList;
+                    var allOption = document.createElement("option");
+                    allOption.text = "All sub topics";
+                    document.getElementById('eventSubTopic').appendChild(allOption);
+                    for (i = 0; i < subTopicsListArray.length; i++) {
+                        var option = document.createElement("option");
+                        option.text = subTopicsListArray[i].eventName;
+                        document.getElementById('eventSubTopic').appendChild(option);
+                    }
+                    break;
+                }
+            }
+            //console.log(selectedValue);
+        }
+
+        $(document).ready(function(){
+            var row=0;
+            $("#add_row").click(function() {
+//                $('#addr' + row).html("<td>" + (row + 1) + "</td><td>" +
+//                        "<label name='eventName" + row + "'  id='eventNameId" + row + "' type='text' >" + document.getElementById('eventName').value + "</label></td>" +
+//                        "<td><label  name='eventTopic" + row + "' id='eventTopicId" + row + "' type='text' >" + document.getElementById('eventTopic').value + " </label></td>" +
+//                        "<td><label  name='eventSubTopic" + row + "' id='eventSubTopicId" + row + "' type='text'>" + document.getElementById('eventSubTopic').value + " </label></td>");
+//
+//                $('#tab_pref').append('<tr id="addr' + (row + 1) + '"></tr>');
+//                row++;
+
+                var selectedEventType =  document.getElementById('eventName').value;
+                var selectedEventTopic =  document.getElementById('eventTopic').value;
+                var selectedEventSubTopic =  document.getElementById('eventSubTopic').value;
+
+                for (i = 0; i < eventTypeArray.length; i++) {
+                    if (eventTypeArray[i].eventName.localeCompare(selectedEventType) == 0) {
+                        selectedCategory0Pref[eventTypeArray[i].eventId] = eventTypeArray[i].eventName;
+                        break;
+                    }
+                }
+                for(var i =0;i< eventTopicArray.length;i++){
+                    if(eventTopicArray[i].topicName.localeCompare(selectedEventTopic) == 0){
+                        if(selectedEventSubTopic.localeCompare("All sub topics") == 0){
+                            selectedCategory1Pref[eventTopicArray[i].topicId] = eventTopicArray[i].topicName;
+                        } else{
+                            var subTopicsListArray  = eventTopicArray[i].subTopicsList;
+                            for (i = 0; i < subTopicsListArray.length; i++) {
+                                if(subTopicsListArray[i].eventName.localeCompare(selectedEventSubTopic) == 0) {
+                                    selectedCategory2Pref[subTopicsListArray[i].eventId]= subTopicsListArray[i].eventName;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                //console.log(userPreferences);
+                console.log("MAP cat 2" + JSON.stringify(selectedCategory2Pref));
+                console.log("MAP cat 1" + JSON.stringify(selectedCategory1Pref));
+                console.log("MAP cat 0" + JSON.stringify(selectedCategory0Pref));
+
+                renderPreferences();
+            });
+
+            $("#delete_row").click(function(){
+                if(row >= 0){
+                    $("#addr"+(row-1)).html('');
+                    row--;
+                }
+                if(userPreferences.length > 0){
+                    userPreferences.pop();
+                    userPreferences.pop();
+                }
+
+            });
+
+
+            $("#category0label").on('click', function () {
+                console.log("hellp");
+                //$(this).button('complete') // button text will be "finished!"
+            });
+            $("#ab").on('click', function () {
+                console.log("hellp-ab");
+                //$(this).button('complete') // button text will be "finished!"
+            });
+        });
+
+
+
+        function renderPreferences(){
+            document.getElementById('preference-category-0').innerHTML = "";
+            document.getElementById('preference-category-1-2').innerHTML = "";
+            var p0 = document.getElementById('preference-category-0');
+            var p1And2 = document.getElementById('preference-category-1-2');
+            for (var key in selectedCategory0Pref) {
+                p0.insertAdjacentHTML('beforeend', "<label class= 'btn btn-primary 'id = 'category0label' name ="+key+"><input type= 'checkbox' id='ab' autocomplete= 'off' >"+ selectedCategory0Pref[key] + "</label>");
+
+//                p0.insertAdjacentHTML('beforeend', "<button type='button' id='category0label' class='btn btn-primary' autocomplete='off' data-complete-text="+ selectedCategory0Pref[key] +" name ="+key+"></button>");
+                <!--<button type='button' id='myStateButton' data-complete-text="finished!" class="btn btn-primary" autocomplete="off">       &lt;!&ndash;<input type="checkbox" autocomplete="off"> Checkbox 2&ndash;&gt;-->
+
+            }
+
+            for (var key in selectedCategory1Pref) {
+                p1And2.insertAdjacentHTML('beforeend', "<label class= btn btn-primary id = category1Pref name = "+key+" ><input type= checkbox autocomplete= off >"+ selectedCategory1Pref[key] + "</label>");
+//                p1And2.insertAdjacentHTML('beforeend',"<button  id=" + key + "class= button>" + selectedCategory1Pref[key] + "</button>")
+            }
+            for (var key in selectedCategory2Pref) {
+                p1And2.insertAdjacentHTML('beforeend', "<label class= btn btn-primary id = category2Pref name = "+key+" ><input type= checkbox autocomplete= off >"+ selectedCategory2Pref[key] + "</label>");
+//                p1And2.insertAdjacentHTML('beforeend',"<button  id=" + key + "class= button>" + selectedCategory2Pref[key] + "</button>")
+            }
+        }
+
+        function savePreferences(){
+
+            for (var key in selectedCategory0Pref) {
+                userPreferences.push(new subPreference(key, "0"));
+            }
+            for (var key in selectedCategory1Pref) {
+                userPreferences.push(new subPreference(key, "1"));
+            }
+            for (var key in selectedCategory2Pref) {
+                userPreferences.push(new subPreference(key, "2"));
+            }
+
+            var response = {
+                'userId' : 3,
+                'userPreference':userPreferences
+            }
+
+            
+
+            jQuery.ajax({
+                url: 'http://ec2-52-87-159-69.compute-1.amazonaws.com:8080/WHAM/updatePref',
+                data : JSON.stringify(response),
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function(data) {
+                    sweetAlert("Congrats!", "Your have saved your preferences!", "success");
+
+                    //$('#creat_event_form').trigger("reset");
+
+                }
+            });
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+
+<header>
+    <div class="cd-logo">
+        <a href="AfterLoginPage.html"><img src="../images/WHAM Logo.png" alt="Logo">
+        </a>
+    </div>
+</header>
+
+<div class="cd-main-content" style="background-color:transparent">
+    <div class="intrinsic-container-16x9" align="center">
+
+        <div class="form_container container">
+            <h2 style="text-align:center;">Choose Your Preferences
+
+            </h2>
+            <br>
+            <br>
+            <label for="eventName" ><h4>EVENT TYPE</h4></label>
+            <select id="eventName" style=" width:500px" >
+                <option disabled selected value>Select event type</option>
+            </select>
+
+          <br>
+            <table style="border: hidden">
+                <tr>
+                    <td align="center" style="border: hidden">
+                        <label for="eventTopic"><h4>EVENT TOPIC</h4></label>
+                        <select id="eventTopic" onchange="onSelectEventTopic()" style ="width: 240px" >
+                            <option disabled selected value>Select event topic</option>
+                        </select>
+                    </td>
+                    <td align="center" style="border: hidden">
+                        <label for="eventSubTopic"><h4>EVENT SUB-TOPIC</h4></label>
+                        <select id="eventSubTopic" style="width: 240px ; margin-left: 20px">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table style="border: hidden">
+                <tr>
+                    <td align="center" style="border: hidden">
+                        <button  id="add_row" class=" button" >Add </button>
+                        </select>
+                    </td>
+                    <td align="center" style="border: hidden">
+                        <button id="delete_row" class=" button "  >Delete</button>
+                        </select>
+                    </td>
+                    <td align="center" style="border: hidden">
+                        <button  onclick="savePreferences()" class=" button ">Save</button>
+                        </select>
+                    </td>
+
+                </tr>
+            </table>
+
+
+            <div>
+                <div class="col-md-12 column">
+                    <table id="tab_pref">
+                        <!--<thead>-->
+                        <!--<tr >-->
+                            <!--<th class="text-center">-->
+                                <!--#-->
+                            <!--</th>-->
+                            <!--<th class="text-center">-->
+                                <!--Event Type-->
+                            <!--</th>-->
+                            <!--<th class="text-center">-->
+                                <!--Event Topic-->
+                            <!--</th>-->
+                            <!--<th class="text-center">-->
+                                <!--Event Sub Topic-->
+                            <!--</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr id='addr0'></tr>-->
+                        <!--</tbody>-->
+
+                        <!--<div id = "preference-category-0"></div>-->
+                        <!--<br>-->
+                        <!--<div id = "preference-category-1-2"></div>-->
+
+                    </table>
+                    <div class="btn-group" data-toggle="buttons" id = "preference-category-0">
+                        <!--<label class="btn btn-primary active">-->
+                            <!--<input type="checkbox" autocomplete="off" checked> Checkbox 1 (pre-checked)-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-primary">-->
+                            <!--<input type="checkbox" autocomplete="off"> Checkbox 2-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-primary">-->
+                            <!--<input type="checkbox" autocomplete="off"> Checkbox 3-->
+                        <!--</label>-->
+                    </div>
+                    <br><br>
+                    <div class="btn-group" data-toggle="buttons" id = "preference-category-1-2">
+                        <!--<label class="btn btn-primary active">-->
+                            <!--<input type="checkbox" autocomplete="off" checked> Checkbox 1 (pre-checked)-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-primary">-->
+                            <!--<input type="checkbox" autocomplete="off"> Checkbox 2-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-primary">-->
+                            <!--<input type="checkbox" autocomplete="off"> Checkbox 3-->
+                        <!--</label>-->
+                    </div>
+                    <button type="button" id="myStateButton" class="btn btn-primary" autocomplete="off">
+                        Disha's semester</button>
+
+                    <!--<input type="checkbox" id="togglecheckbox" autocomplete="off" > hello-->
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off"> Checkbox 2
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off"> Checkbox 3
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" id="togglecheckbox" autocomplete="off" > hello
+                        </label>
+                    </div>
+                    <script>
+                        $('#myStateButton').on('click', function () {
+//                            $(this).button('complete') // button text will be "finished!"
+                            console.log("clicked");
+                        })
+                        $("#togglecheckbox").click(function()
+
+                        {
+                            console.log("helllooo");
+
+                        });
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

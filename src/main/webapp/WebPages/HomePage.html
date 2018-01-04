@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WHAM</title>
+    <link rel="shortcut icon" type="image/png" href="../images/WHAM_new.png" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+    <link href="../css/pageStyle.css" rel="stylesheet" />
+    <link href="../css/homePageBlocks.css" rel="stylesheet" />
+    <script>
+        // navigate to AfterLoginPage if user is signed in
+        if (localStorage.getItem("name") === null) { }
+        else
+        if (localStorage.getItem("name") != "") {
+            window.location.href = "AfterLoginPage.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="cd-logo"><a href="HomePage.html"><img src="../images/WHAM Logo.png" alt="Logo"></a></div>
+        <nav class="cd-main-nav-wrapper">
+            <ul class="cd-main-nav">
+                <li class="loginBtn"> <a href="Login.html" type="button" class="btn btn-default" style="text-decoration: none;">LOG IN</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="cd-main-content">
+        <div class="intrinsic-container-16x9" style="text-align:center">
+            <iframe src="maps1.html" style="width: 90%; margin-top:50px"></iframe>
+        </div>
+        <div class="content-desktop" style="padding-top:30px">
+            <div class="content" onclick="navigate()" style="cursor:pointer">
+                <div class="content-header">
+                    <h1>Sports</h1>
+                </div>
+                <div style="position: relative; left: 0; top: 0;">
+                    <img class="top" src="http://caninemascots.files.wordpress.com/2009/12/paws.jpg" style="position: relative; left: 0; top: 0;" alt="Sports">
+                    <img class="bottom" src="http://cdn.c.photoshelter.com/img-get/I0000BmHoJMwbrGY/s/750/750/NCAATQ090310910.jpg" style="position: absolute; left: 2px; top: 0;" alt="Sports">
+                    <img class="middle" src="https://colleges.niche.com/images/standard/1184/?v=fcae3fb" style="position: absolute; left: 2px; top: 0;" alt="Sports">
+                    <img class="middle2" src="http://img0.study.com.ua/images/colleges/bostnorth/bostnorth-5.jpg" style="position: absolute; left: 2px; top: 0;" alt="Sports">
+                </div>              
+                <div class="content-footer">
+                    <h1>Post your event now</h1>
+                </div>
+            </div>
+ 
+            <div class="content content-2" onclick="navigate()" style="cursor:pointer">
+                <div class="content-header">
+                    <h1>Culture</h1>
+                </div>
+                <div style="position: relative; left: 0; top: 0;">
+                    <img class="top" src="http://www.neiu.edu/university-life/sites/neiu.edu.university-life/files/styles/feature_image/public/unit-dept-homepage-feature-images/2016/02/29/Group2WebSlider.jpg?itok=wie6QDiC" style="position: relative; left: 0; top: 0;" alt="Cultural">
+                    <img class="bottom" src="http://www.northeastern.edu/camd/cfa/wp-content/uploads/sites/10/2015/01/NEU_BlackCake_1440x500.jpg" style="position: absolute; left: 2px; top: 0;" alt="Cultural">
+                    <img class="middle" src="http://www.tourismus.ulm.de/web/we-bilder/inhalt/03_feste_veranstaltungen/bindertanz/00_Bindertanz.jpg" style="position: absolute; left: 2px; top: 0;" alt="Cultural">
+                    <img class="middle2" src="http://www.northeastern.edu/news/wp-content/uploads/2014/11/icecarving1400-740x493.jpg" style="position: absolute; left: 2px; top: 0;" alt="Cultural">
+                </div>
+                <div class="content-footer">
+                    <h1>Post your event now</h1>
+                </div>
+            </div>
+            <div class="content content-3" onclick="navigate()" style="cursor:pointer">
+                <div class="content-header">
+                    <h1>More</h1>
+                </div>
+                <div style="position: relative; left: 0; top: 0;">
+                    <img class="top" src="http://www.cps.neu.edu/images/empower600a-590x393.jpg" style="position: relative; left: 0; top: 0;" alt="More">
+                    <img class="bottom" src="http://thecherawchronicle.com/wp-content/uploads/2015/11/web1_CynthiaMcCormick.jpg" style="position: absolute; left: 2px; top: 0;" alt="More">
+                    <img class="middle" src="http://www.neiu.edu/sites/neiu.edu/files/styles/splash_feature_medium/public/marketing-images/2014/01/31/slide1_learn.jpg?itok=2m0g5QOf" style="position: absolute; left: 2px; top: 0;" alt="More">
+                    <img class="middle2" src="http://www.northeastern.edu/news/wp-content/uploads/2015/06/SeattleSTEM2.jpeg" style="position: absolute; left: 2px; top: 0;" alt="More">
+                </div>
+                <div class="content-footer">
+                    <h1>Post your event now</h1>
+                </div>
+            </div>
+        </div>
+        <div class="content-mobile">
+            <div>
+               
+            </div>
+        </div>
+    </main>
+    <script>
+        function navigate() {
+            window.location.href = "Login.html"
+        }
+    </script>
+</body>
+</html>
+
+    <!--<div class="container" style="text-align:center">
+        <button type="button" class="btn btn-link" style="font-size:20px;padding-right:250px">Manage your preferences</button>
+        <button type="button" class="btn btn-link" style="font-size: 20px; padding-left: 50px">Create an event</button>
+        <div id="myMap"></div> 
+    </div>-->
